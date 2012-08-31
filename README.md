@@ -1,12 +1,10 @@
 iSniff GPS
 ==========
 
-This tool performs passive WiFi sniffing for SSID probes, ARPs and MDNS (Bonjour) packets broadcast by nearby iPhones, iPads and other wireless devices.
-The aim is to collect data which can be used to identify each device and determine previous geographical locations, based solely on information each device discloses about WiFi networks it has previously joined.
+iSniff GPS passively sniffs for SSID probes, ARPs and MDNS (Bonjour) packets broadcast by nearby iPhones, iPads and other wireless devices.
+The aim is to collect data which can be used to identify each device and determine previous geographical locations, based solely on information each device discloses about previously joined WiFi networks.
 
-iOS devices transmit ARPs which sometimes contain WiFi AP MAC addresses (BSSIDs) of previously joined networks (see [1]). This is believed to be an implementation of RFC 4436.
-
-If such an ARP is detected, iSniff GPS is able to submit this MAC address to Apple's WiFi location service (masquerading as an iOS device) and visualise the location returned through a Google Maps embed. This is often highly accurate. If only standard SSID probes have been captured for a particular device, iSniff GPS can query each SSID on wigle.net and visualise possible locations.
+iOS devices transmit ARPs which sometimes contain MAC addresses (BSSIDs) of previously joined WiFi networks, as described in [1]. iSniff GPS is able to capture these ARPs and submit MAC addresses to Apple's WiFi location service (masquerading as an iOS device) to obtain GPS coordinates for a given BSSID. If only standard SSID probes have been captured for a particular device, iSniff GPS can query network names on wigle.net and visualise possible locations.
 
 By geo-locating multiple SSIDs and WiFi router MAC addresses disclosed by a particular device, it is possible to determine where a device (and by implication its owner) is likely to have been.
 
@@ -25,15 +23,14 @@ iSniff GPS contains 2 major components and further python modules:
 Instructions
 ------------
 
-Install Django, Scapy and all required Python modules.
+1. Install Django, Scapy and all required Python modules.
+2. Initialise an empty database by running `./manage.py syncdb`.
+3. Import data from a pcap by running `./run.sh -r <chan11.pcap>` or start live sniffing with `./run.sh -i mon0`. 
+4. Start the web interface by running `./manage.py runserver ip:port`.
 
-Initialise an empty database by running `./manage.py syncdb`.
+To solicit ARPs from iOS devices, set up an access point with DHCP disabled (e.g. using airbase-ng) and configure your sniffing interface to the same channel. 
 
-Import data from a pcap by running `./run.sh -r <chan11.pcap>` or start live sniffing with `./run.sh -i mon0`.
-
-Start the web interface by running `./manage.py runserver ip:port`.
-
-To solicit ARPs from iOS devices, set up an access point with DHCP disabled (e.g. using airbase-ng) and configure your sniffing interface to the same channel. After associating to the network, iOS devices will send up to three ARPs destined for the MAC address of the DHCP server on previously joined networks. On typical home WiFi routers this is usually the same as the WiFi interface MAC address, which can be used for accurate geo-location. On larger corporate WiFi networks the MAC of the DHCP server may be different and thus cannot be used for geolocation.
+Once associated, iOS devices will send up to three ARPs destined for the MAC address of the DHCP server on previously joined networks. On typical home WiFi routers, the DHCP server MAC address is the same as the WiFi interface MAC address, which can be used for accurate geolocation. On larger corporate WiFi networks, the MAC of the DHCP server may be different and thus cannot be used for geolocation.
 
 Dependencies
 ------------
@@ -54,7 +51,7 @@ Written by @hubert3 / hubert(at)pentest.com.
 
 Presented at Blackhat USA July 2012, code published on Github 2012-08-31.
 
-The implementation of wloc.py which communicates with Apple's WiFi location service to obtain the GPS coordinates of a given BSSID is based on work by François-Xavier Aguessy and Côme Demoustier [2].
+The implementation of wloc.py is based on work by François-Xavier Aguessy and Côme Demoustier [2].
 
 Mark Wuergler of Immunity, Inc. provided helpful information through mailing list posts and Twitter replies.
 
