@@ -16,25 +16,23 @@ iSniff GPS contains 2 major components and further python modules:
 * A python script (iSniff_import.py) uses scapy to extract data from a live capture or pcap file and inserts it into a database (iSniff_GPS.sqlite3 by default).
 * A Django web application provides a browser-based interface to view and analyse the data collected. 
 
-wloc.py provides functionality for querying a given BSSID (AP MAC address) on Apple's WiFi location service.
-It will return the coordinates of the specific MAC queried for and usually an additional 400 nearby BSSIDs and their coordinates.
+* wloc.py provides functionality for querying a given BSSID (AP MAC address) on Apple's WiFi location service. It will return the coordinates of the specific MAC queried for and usually an additional 400 nearby BSSIDs and their coordinates.
 
-wigle.py provides a function for querying a given SSID on the wigle.net database and returns GPS coordinates.
-It must be configured with a valid wigle.net auth cookie. Please respect the wigle.net ToS in using this module.
+* wigle.py provides a function for querying a given SSID on the wigle.net database and returns GPS coordinates. It must be configured with a valid wigle.net auth cookie. Please respect the wigle.net ToS in using this module.
 
 Instructions
 ------------
 
 Install Django, Scapy and all required Python modules.
-Initialise an empty database by running "./manage.py syncdb".
-Import data from a pcap by running "./run.sh -r <chan11.pcap>" or start live sniffing with "./run.sh -i mon0".
-Start the web interface by running "./manage.py runserver ip:port".
+Initialise an empty database by running `./manage.py syncdb`.
+Import data from a pcap by running `./run.sh -r <chan11.pcap>` or start live sniffing with `./run.sh -i mon0`.
+Start the web interface by running `./manage.py runserver ip:port`.
 
 Dependencies
 ------------
 
 iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.4 and Scapy 2.2.0-dev.
-Additional Python modules are required which can generally be installed by running 'pip install <module>':
+Additional Python modules are required which can generally be installed by running `pip install <module>`:
 
 * dnslib
 * netaddr
@@ -49,9 +47,11 @@ Written by @hubert3 / hubert(at)pentest.com
 First presented at Blackhat USA July 2012
 Code first published on Github 2012-08-31
 
-The implementation of wloc.py which communicates with Apple's WiFi location service to obtain the GPS coordinates of a given BSSID is based on work by François-Xavier Aguessy and Côme Demoustier [2]
-Mark Wuergler of Immunity, Inc. provided helpful information through mailing list posts and Twitter replies.
-Bluff JS chart library by James Coglan.
+The implementation of wloc.py which communicates with Apple's WiFi location service to obtain the GPS coordinates of a given BSSID is based on work by François-Xavier Aguessy and Côme Demoustier [2].
 
-[1] http://arstechnica.com/apple/2012/03/anatomy-of-an-iphone-leak/
-[2] http://fxaguessy.fr/rapport-pfe-interception-ssl-analyse-donnees-localisation-smartphones/
+Mark Wuergler of Immunity, Inc. provided helpful information through mailing list posts and Twitter replies.
+
+Includes Bluff JS chart library by James Coglan.
+
+1. http://arstechnica.com/apple/2012/03/anatomy-of-an-iphone-leak/
+2. http://fxaguessy.fr/rapport-pfe-interception-ssl-analyse-donnees-localisation-smartphones/
