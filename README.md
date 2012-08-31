@@ -4,9 +4,9 @@ iSniff GPS
 iSniff GPS passively sniffs for SSID probes, ARPs and MDNS (Bonjour) packets broadcast by nearby iPhones, iPads and other wireless devices.
 The aim is to collect data which can be used to identify each device and determine previous geographical locations, based solely on information each device discloses about previously joined WiFi networks.
 
-iOS devices transmit ARPs which sometimes contain MAC addresses (BSSIDs) of previously joined WiFi networks, as described in [1]. iSniff GPS is able to capture these ARPs and submit MAC addresses to Apple's WiFi location service (masquerading as an iOS device) to obtain GPS coordinates for a given BSSID. If only standard SSID probes have been captured for a particular device, iSniff GPS can query network names on wigle.net and visualise possible locations.
+iOS devices transmit ARPs which sometimes contain MAC addresses (BSSIDs) of previously joined WiFi networks, as described in [1][ars]. iSniff GPS captures these ARPs and submits MAC addresses to Apple's WiFi location service (masquerading as an iOS device) to obtain GPS coordinates for a given BSSID. If only SSID probes have been captured for a particular device, iSniff GPS can query network names on wigle.net and visualise possible locations.
 
-By geo-locating multiple SSIDs and WiFi router MAC addresses disclosed by a particular device, it is possible to determine where a device (and by implication its owner) is likely to have been.
+By geo-locating multiple SSIDs and WiFi router MAC addresses, it is possible to determine where a device (and by implication its owner) is likely to have been.
 
 Components
 ----------
@@ -51,7 +51,7 @@ Written by @hubert3 / hubert(at)pentest.com.
 
 Presented at Blackhat USA July 2012, code published on Github 2012-08-31.
 
-The implementation of wloc.py is based on work by François-Xavier Aguessy and Côme Demoustier [2].
+The implementation of wloc.py is based on work by François-Xavier Aguessy and Côme Demoustier [2][paper].
 
 Mark Wuergler of Immunity, Inc. provided helpful information through mailing list posts and Twitter replies.
 
@@ -59,3 +59,6 @@ Includes Bluff JS chart library by James Coglan.
 
 1. http://arstechnica.com/apple/2012/03/anatomy-of-an-iphone-leak/
 2. http://fxaguessy.fr/rapport-pfe-interception-ssl-analyse-donnees-localisation-smartphones/
+
+[ars]: http://arstechnica.com/apple/2012/03/anatomy-of-an-iphone-leak/
+[paper]: http://fxaguessy.fr/rapport-pfe-interception-ssl-analyse-donnees-localisation-smartphones/
