@@ -49,7 +49,7 @@ Credits
 
 Written by @hubert3 / hubert(at)pentest.com. Presented at Blackhat USA July 2012, code published on Github 2012-08-31.
 
-The implementation of wloc.py is based on work by François-Xavier Aguessy and Côme Demoustier [2][paper].
+The implementation of wloc.py is based on work by François-Xavier Aguessy and Côme Demoustier [[2]][paper].
 
 Mark Wuergler of Immunity, Inc. provided helpful information through mailing list posts and Twitter replies.
 
