@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+# Mostly taken from paper by François-Xavier Aguessy and Côme Demoustier
+# http://fxaguessy.fr/rapport-pfe-interception-ssl-analyse-donnees-localisation-smartphones/
+
 import sys
 import code
 import requests
