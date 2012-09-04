@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 # Mostly taken from paper by François-Xavier Aguessy and Côme Demoustier
@@ -26,7 +27,8 @@ def ListWifiDepuisApple(wifi_list):
 			lat=wifi.location.latitude*pow(10,-8)
 			lon=wifi.location.longitude*pow(10,-8)
 			#kml.newpoint(name=wifi.bssid, coords=[(lon,lat)])
-			apdict[padBSSID(wifi.bssid)] = (lat,lon)
+			mac=padBSSID(wifi.bssid)
+			apdict[mac] = (lat,lon)
 		if wifi_list.HasField('valeur_inconnue1'):
 			print 'Inconnu1 : ', '%X' % wifi_list.valeur_inconnue1
 		if wifi_list.HasField('valeur_inconnue2'):
