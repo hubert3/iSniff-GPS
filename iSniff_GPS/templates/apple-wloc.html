@@ -19,7 +19,6 @@ function initialize() {
     
 {% for b in bssids %}
     var myLatLng = new google.maps.LatLng{{ apdict|key:b }};
-    var marker = new google.maps.Marker({position: myLatLng, map: map, icon: {% if b == bssid %}flag{%else%}image{%endif%}});
     var marker = new google.maps.Marker({position: myLatLng, map: map, title: '{{b}} - {{manufdict|key:b}}', icon: {% if b == bssid %}flag{%else%}image{%endif%}});
     google.maps.event.addListener(marker, "click", function() { window.location = '/apple-wloc/{{b}}'; });
 {% endfor %}
