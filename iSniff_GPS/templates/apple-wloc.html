@@ -16,12 +16,14 @@ function initialize() {
     var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
     var image = 'http://png-4.findicons.com/files//icons/2482/icons8_ever_growing_set_of_windows_8_metro_style_icons/26/wifi.png'
     var flag = 'https://developers.google.com/maps/documentation/javascript/examples/images/beachflag.png';
+    var flag = '/static/flag.png';
+    var image = '/static/wifi.png';
     
 {% for b in bssids %}
     var myLatLng = new google.maps.LatLng{{ apdict|key:b }};
     var marker = new google.maps.Marker({position: myLatLng, map: map, icon: {% if b == bssid %}flag{%else%}image{%endif%}});
+    var marker = new google.maps.Marker({position: myLatLng, map: map, title: '{{b}} - {{manufdict|key:b}}', icon: {% if b == bssid %}flag{%else%}image{%endif%}});
     google.maps.event.addListener(marker, "click", function() { window.location = '/apple-wloc/{{b}}'; });
-    google.maps.event.addListener(marker, "dblclick", function() { alert(0); });
 {% endfor %}
 }
 </script>
