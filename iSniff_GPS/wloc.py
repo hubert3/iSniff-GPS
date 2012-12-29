@@ -45,7 +45,7 @@ def QueryBSSID(bssid):
 	headers = { 	'Content-Type':'application/x-www-form-urlencoded', 'Accept':'*/*', "Accept-Charset": "utf-8","Accept-Encoding": "gzip, deflate",\
 			"Accept-Language":"en-us", 'User-Agent':'locationd (unknown version) CFNetwork/548.1.4 Darwin/11.0.0'}
 	data = "\x00\x01\x00\x05"+"en_US"+"\x00\x00\x00\x09"+"5.1.9B176"+"\x00\x00\x00\x01\x00\x00\x00" + chr(longueur_chaine_liste_wifi) + chaine_liste_wifi;
-	r = requests.post('https://gs-loc.apple.com/clls/wloc',headers=headers,data=data)
+	r = requests.post('https://gs-loc.apple.com/clls/wloc',headers=headers,data=data,verify=False) #the remote SSL cert CN on this server doesn't match hostname anymore
 	liste_wifi = BSSIDApple_pb2.BlockBSSIDApple() 
 	liste_wifi.ParseFromString(r.content[10:])
 	return ListWifiDepuisApple(liste_wifi)
