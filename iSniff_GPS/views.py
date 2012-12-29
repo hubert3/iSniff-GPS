@@ -7,6 +7,19 @@ from models import *
 import wigle
 import wloc
 import re
+from netaddr import EUI
+
+def get_manuf(apdict):
+	manufdict = {}
+	for m in apdict.keys():
+		try:
+	                mac = EUI(m)
+        	        manufdict[m] = mac.oui.records[0]['org']
+			#.split(' ')[0].replace(',','')
+        	        #.replace(', Inc','').replace(' Inc.','')
+	        except:
+                	manufdict[m] = 'unknown'
+        return manufdict
 
 class ClientList(ListView):
 	model = Client
@@ -104,7 +117,7 @@ def AppleWloc(request,bssid=None):
 				print 'Updated %s location to %s' % (a,(a.lat,a.lon))
 			except ObjectDoesNotExist:
 				pass
-		return render(request,'apple-wloc.html',{'bssid':bssid,'hits':len(apdict),'center':getCenter(apdict),'bssids':apdict.keys(),'apdict':apdict})
+		return render(request,'apple-wloc.html',{'bssid':bssid,'hits':len(apdict),'center':getCenter(apdict),'bssids':apdict.keys(),'apdict':apdict,'manufdict':get_manuf(apdict)})
 	else:
 		return render(request,'apple-wloc.html',{'bssid':'00:1b:2f:3d:a9:32'})
 
