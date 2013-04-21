@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.generic import *
 from django.db.models import Count
 from models import *
+from string import lower
 import wigle
 import wloc
 import re
@@ -105,6 +106,7 @@ def getCenter(apdict):
 	
 def AppleWloc(request,bssid=None):
 	if bssid:
+		bssid=lower(bssid)
 		apdict = wloc.QueryBSSID(bssid)
 		numresults = len(apdict)
 		if numresults == 0 or (-180.0, -180.0) in apdict.values():
