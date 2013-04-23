@@ -20,7 +20,7 @@ function initialize() {
 {% for b in bssids %}
     var myLatLng = new google.maps.LatLng{{ apdict|key:b }};
     var marker = new google.maps.Marker({position: myLatLng, map: map, title: '{{b}} - {{manufdict|key:b}}', icon: {% if b == bssid %}flag{%else%}image{%endif%}});
-    google.maps.event.addListener(marker, "click", function() { window.location = '/apple-wloc/{{b}}'; });
+    google.maps.event.addListener(marker, "click", function() { window.location = '{% url applewloc b %}'; });
 {% endfor %}
 }
 </script>
@@ -29,7 +29,7 @@ function initialize() {
 {% block content %}
 <h2>BSSID</h2>
 <input id="BSSID" value="{{ bssid }}">
-<input type="submit" value="Go" onclick='window.location="/apple-wloc/"+document.getElementById("BSSID").value'>
+<input type="submit" value="Go" onclick='window.location="{% url applewloc-base %}"+document.getElementById("BSSID").value'>
 {% if hits %}{{hits}} APs returned.{%endif%}
 <div id="map_canvas"></div>
 {% endblock %}

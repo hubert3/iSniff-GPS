@@ -20,7 +20,9 @@ function initialize() {}
         {% for ap in object_list %}
     <tr class="{% cycle '' 'alt' %}">
         <td>
-            <a href="/network/{% if ap.BSSID %}{{ap.BSSID}}{%else%}{{ap.SSID}}{%endif%}">
+            {% url network ap.BSSID as bssidurl %}
+            {% url network ap.SSID as ssidurl %}
+            <a href="{% if ap.BSSID %}{{ bssidurl }}{%else%}{{ ssidurl }}{%endif%}">
             {% if ap.BSSID %}{{ap.BSSID}}{%else%}{{ap.SSID}}{%endif%}</a>{%if ap.BSSID%} ({{ap.manufacturer}}){%endif%}
         </td>
         <td>{{ap.client.all|length}} | 

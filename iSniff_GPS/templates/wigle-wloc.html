@@ -15,8 +15,8 @@ function initialize() {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-    var image = '/static/wifi.png';
-    var flag = '/static/flag.png';
+    var image = '/static/wifi.png'
+    var flag = '/static/flag.png'
     
 {% for b in bssids %}
     var myLatLng = new google.maps.LatLng{{ apdict|key:b }};
@@ -25,7 +25,7 @@ function initialize() {
 { 
 $.ajax({
   type: "POST",
-  url: "/updateSSID",
+  url: "{% url updatessid %}",
   data: { ssid: "{{ssid}}", position:"{{apdict|key:b}}", csrf_token: "{{csrf_token}}" }
 }).done(function( msg ) {
   alert(msg);
@@ -38,7 +38,7 @@ $.ajax({
 {% block content %}
 <h2>SSID</h2>
 <input id="SSID" value="{{ ssid }}">
-<input type="submit" value="Go" onclick='window.location="/locateSSID/"+document.getElementById("SSID").value'>
+<input type="submit" value="Go" onclick='window.location="{% url locatessid-base %}"+document.getElementById("SSID").value'>
 {% if hits %}{{hits}} APs returned.{%endif%}
 <div id="map_canvas"></div>
 {% endblock %}

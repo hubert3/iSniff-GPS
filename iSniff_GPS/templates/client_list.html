@@ -20,7 +20,7 @@ function initialize() {}
 	</thead>
         {% for c in object_list %}
 	<tr class="{% cycle '' 'alt' %}">
-		<td><a href="/client/{{ c.mac }}">{{ c.mac }}</a>{% if c.name %}<br>{{c.name}}{%endif%}</td>
+		<td><a href="{% url client c.mac %}">{{ c.mac }}</a>{% if c.name %}<br>{{c.name}}{%endif%}</td>
 		<td>{{ c.manufacturer }}</td>
 		<td>{% for ap in probedict|key:c %}{{ap|safe}}&nbsp;&nbsp;{% endfor %}</td>
 		<td>{{ c.lastprobed_date }}</td> 
