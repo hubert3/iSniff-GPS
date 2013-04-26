@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>{% block title %}iSniff GPS v0.1 ALPHA Blackhat Arsenal Preview{% endblock %}</title>
+<title>{% block title %}iSniff GPS v0.2 SyScan Edition{% endblock %}</title>
 <style>
 
 body {
@@ -171,7 +171,7 @@ table {
 
 <body onload="initialize()">
     <div id="sidebar">
-        <a href="{%url clientlist %}">Clients</a> | <a href="{%url networks%}">Networks</a> | <a href="{%url applewloc '00:1b:2f:3d:a9:32'%}">Apple WiFi Geolocation</a> | <a href="{%url locatessid 'blackhat'%}">SSID Search</a> | <a href="{%url stats%}">Stats</a>
+        <a href="{%url "clientlist" %}">Clients</a> | <a href="{%url "networks"%}">Networks</a> | <a href="{%url "applewloc" '00:1b:2f:3d:a9:32'%}">Apple WiFi Geolocation</a> | <a href="{%url "locatessid" 'blackhat'%}">SSID Search</a> | <a href="{%url "stats"%}">Stats</a>
     </div>
     {% block content %}{% endblock %}
 </body>

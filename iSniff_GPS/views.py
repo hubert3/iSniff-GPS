@@ -10,6 +10,8 @@ import wloc
 import re
 from netaddr import EUI
 
+apset = set()
+
 def get_manuf(apdict):
 	manufdict = {}
 	for m in apdict.keys():
@@ -102,26 +104,49 @@ def getCenter(apdict):
 	for (lat,lon) in apdict.values():
 		latCenter += lat
 		lonCenter += lon
-	return( ((latCenter / numresults),(lonCenter / numresults)) )
+	try:
+		return( ((latCenter / numresults),(lonCenter / numresults)) )
+	except ZeroDivisionError:
+		return((0,0))
 	
-def AppleWloc(request,bssid=None):
-	if bssid:
-		bssid=lower(bssid)
-		apdict = wloc.QueryBSSID(bssid)
-		numresults = len(apdict)
-		if numresults == 0 or (-180.0, -180.0) in apdict.values():
-			return HttpResponse('0 results.')
-		if bssid in apdict.keys():
-			try:
-				a = AP.objects.get(BSSID=bssid)
-				(a.lat,a.lon) = apdict[bssid]
-				a.save() #if Apple returns a match for BSSID we save this as location
-				print 'Updated %s location to %s' % (a,(a.lat,a.lon))
-			except ObjectDoesNotExist:
-				pass
-		return render(request,'apple-wloc.html',{'bssid':bssid,'hits':len(apdict),'center':getCenter(apdict),'bssids':apdict.keys(),'apdict':apdict,'manufdict':get_manuf(apdict)})
+def AppleWloc(request,bssid=None):	
+	print
+	print 'Got request for %s' % bssid
+	if not bssid:
+		bssid = '00:0f:61:8b:f6:21'
+	if 'apset' not in request.session:
+		request.session['apset'] = set()
+	if request.GET.get('ajax'):
+		template='apple-wloc-ajax.js'		
 	else:
-		return render(request,'apple-wloc.html',{'bssid':'00:1b:2f:3d:a9:32'})
+		template='apple-wloc.html'
+		request.session['apset'] = set() #reset server-side cache of unique bssids if we load page normally
+	print '%s in set at start' % len(request.session['apset'])
+	#print request.session['apset']
+	bssid=lower(bssid)
+	apdict = wloc.QueryBSSID(bssid)	
+	print '%s returned from Apple' % len(apdict)
+	dupes = 0
+	for ap in apdict.keys():
+		if ap in request.session['apset']:
+			dupes += 1
+			del apdict[ap]
+		request.session['apset'].add(ap)
+	numresults = len(apdict)
+	print '%s dupes excluded' % dupes
+	print '%s in set post filter' % len(request.session['apset'])
+	print '%s returned to browser post filter' % numresults
+	#if numresults == 0 or (-180.0, -180.0) in apdict.values():
+	#	return HttpResponse('0 results.')
+	if bssid in apdict.keys():
+		try:
+			a = AP.objects.get(BSSID=bssid) #original design - only save ap to db if it's one that has been probed for
+			(a.lat,a.lon) = apdict[bssid]
+			a.save() #if Apple returns a match for BSSID we save this as location
+			print 'Updated %s location to %s' % (a,(a.lat,a.lon))
+		except ObjectDoesNotExist:
+			pass
+	return render(request,template,{'bssid':bssid,'hits':len(apdict),'center':getCenter(apdict),'bssids':apdict.keys(),'apdict':apdict,'manufdict':get_manuf(apdict)})
 
 def locateSSID(request,ssid=None):
 	if ssid:

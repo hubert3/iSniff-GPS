@@ -25,7 +25,7 @@ function initialize() {
 { 
 $.ajax({
   type: "POST",
-  url: "{% url updatessid %}",
+  url: "{% url "updatessid" %}",
   data: { ssid: "{{ssid}}", position:"{{apdict|key:b}}", csrf_token: "{{csrf_token}}" }
 }).done(function( msg ) {
   alert(msg);
@@ -38,7 +38,7 @@ $.ajax({
 {% block content %}
 <h2>SSID</h2>
 <input id="SSID" value="{{ ssid }}">
-<input type="submit" value="Go" onclick='window.location="{% url locatessid-base %}"+document.getElementById("SSID").value'>
+<input type="submit" value="Go" onclick='window.location="{% url "locatessid-base" %}"+document.getElementById("SSID").value'>
 {% if hits %}{{hits}} APs returned.{%endif%}
 <div id="map_canvas"></div>
 {% endblock %}
