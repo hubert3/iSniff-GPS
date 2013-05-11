@@ -38,7 +38,7 @@ $.ajax({
 {% block content %}
 <h2>SSID</h2>
 <input id="SSID" value="{{ ssid }}">
-<input type="submit" value="Go" onclick='window.location="{% url "locatessid-base" %}"+document.getElementById("SSID").value'>
+<input type="submit" value="Go" onclick='window.location="{% url "locatessid-base" %}/"+document.getElementById("SSID").value'>
 {% if hits %}{{hits}} APs returned.{%endif%}
 <div id="map_canvas"></div>
 {% endblock %}
