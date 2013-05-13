@@ -8,6 +8,10 @@ iOS devices transmit ARPs which sometimes contain MAC addresses (BSSIDs) of prev
 
 By geo-locating multiple SSIDs and WiFi router MAC addresses, it is possible to determine where a device (and by implication its owner) is likely to have been.
 
+Below: Visualisation of WiFi router locations in Melbourne, AU returned by Apple Location Services
+
+![Apple WLOC module screenshot](/iSniff_GPS_Apple_WLOC_screenshot.jpg)
+
 Components
 ----------
 
