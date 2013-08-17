@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 def getLocation(BSSID='',SSID=''):
 	payload = {'netid':BSSID, 'ssid':SSID}
-	cookie = dict(auth='isniff:213379432:1343248782:vt9k3o7M5baOCErrKGK0cw')
+	cookie = dict(auth='isniff:828743010:1376760763:hcPtNcrXETNsQIMIan/1sA')
 	r = requests.post('https://wigle.net/gps/gps/main/confirmquery/',cookies=cookie,data=payload)
 	soup = BeautifulSoup(r.text)
 	apdict={}
@@ -27,12 +27,5 @@ def getLocation(BSSID='',SSID=''):
 			id = '%s [%s] [%s]' % (SSID,bssid_result,count)
 			apdict[id]=(lat,lon)
 			count+=1
-#result.append({'coord':(lon,lat),'ssid':ssid_result,'bssid':bssid_result})
 	return apdict
 
-#res = getLocation(ssid='xxxxxx')
-#print res
-#kml = simplekml.Kml()
-#for r in res:
-#	kml.newpoint(name=r['ssid'],coords=[r['coord']])
-#kml.save('WESTGARTH.kml')
