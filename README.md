@@ -8,6 +8,10 @@ iOS devices transmit ARPs which sometimes contain MAC addresses (BSSIDs) of prev
 
 By geo-locating multiple SSIDs and WiFi router MAC addresses, it is possible to determine where a device (and by implication its owner) is likely to have been.
 
+Below: Visualisation of WiFi router locations in Melbourne, AU returned by Apple Location Services
+
+![Apple WLOC module screenshot](/iSniff_GPS_Apple_WLOC_screenshot.jpg)
+
 Components
 ----------
 
@@ -23,7 +27,7 @@ iSniff GPS contains 2 major components and further python modules:
 Instructions
 ------------
 
-1. Install Django, Scapy and all required Python modules.
+1. Install Django 1.5+, Scapy and all required Python modules.
 2. Initialise an empty database by running `./manage.py syncdb`.
 3. Import data from a pcap by running `./run.sh -r <chan11.pcap>` or start live sniffing with `./run.sh -i mon0`. 
 4. Start the web interface by running `./manage.py runserver ip:port`.
@@ -35,7 +39,7 @@ Once associated, iOS devices will send up to three ARPs destined for the MAC add
 Dependencies
 ------------
 
-iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.4 and Scapy 2.2.0-dev.
+iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.5.1 and Scapy 2.2.0-dev.
 Additional Python modules are required which can generally be installed by running `pip install <module>`:
 
 * dnslib

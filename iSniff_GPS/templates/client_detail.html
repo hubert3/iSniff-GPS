@@ -24,15 +24,15 @@ function initialize() {}
 </thead>
     {% for ap in APs %}
 <tr>
-<td>{% if ap.SSID %}<a href="{% url network ap.SSID %}">{{ ap.SSID }}{%endif%}</a></td>
-<td>{% if ap.BSSID %}<a href="{% url network ap.BSSID %}">{{ ap.BSSID }}{%endif%}</a></td>
+<td>{% if ap.SSID %}<a href="{% url "network" ap.SSID %}">{{ ap.SSID }}{%endif%}</a></td>
+<td>{% if ap.BSSID %}<a href="{% url "network" ap.BSSID %}">{{ ap.BSSID }}{%endif%}</a></td>
 <td>{% if ap.lat %} {{ ap.lat }} {% endif %}</td>
 <td>{% if ap.lon %} {{ ap.lon }} {% endif %}</td>
 <td>{{ ap.comment }}</td>
 <td>{{ ap.lastprobed_date }}</td>
 <td>
-{% if ap.SSID %}<a href="{% url locatessid ap.SSID %}">{% endif %}
-{% if ap.BSSID %}<a href="{% url applewloc ap.BSSID %}">{% endif %}
+{% if ap.SSID %}<a href="{% url "locatessid" ap.SSID %}">{% endif %}
+{% if ap.BSSID %}<a href="{% url "applewloc" ap.BSSID %}">{% endif %}
 <img src="/static/locate.png"></a>
 </td>
 </tr>

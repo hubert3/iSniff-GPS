@@ -1,3 +1,4 @@
+# stolen from https://github.com/securusglobal/abrupt by @tweksteen
 
 style_normal = "\033[0m"
 style_great_success = "\033[1;32m"
