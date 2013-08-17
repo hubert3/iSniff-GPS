@@ -127,7 +127,7 @@ def process(p):
 								#code.interact(local=locals())
 								if src != '01:00:5e:00:00:fb':
 									CreateOrUpdateClient(src,datetime.utcfromtimestamp(p.time),name)
-							except NoneType:
+							except AttributeError:
 								print warning('Error parsing MDNS')
 				except IndexError:
 					pass
