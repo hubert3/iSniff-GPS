@@ -120,12 +120,15 @@ def process(p):
 					d=DNSRecord.parse(p['Raw.load'])
 					for q in d.questions:
 						if q.qtype == 255 and '_tcp.local' not in str(q.qname):
-							src=p.getlayer('Dot11').addr3
-							name=str(q.qname).strip('.local')
-							print great_success('%s is %s') % (src, name)
-							#code.interact(local=locals())
-							if src != '01:00:5e:00:00:fb':
-								CreateOrUpdateClient(src,datetime.utcfromtimestamp(p.time),name)
+							try:
+								src=p.getlayer('Dot11').addr3
+								name=str(q.qname).strip('.local')
+								print great_success('%s is %s') % (src, name)
+								#code.interact(local=locals())
+								if src != '01:00:5e:00:00:fb':
+									CreateOrUpdateClient(src,datetime.utcfromtimestamp(p.time),name)
+							except NoneType:
+								print warning('Error parsing MDNS')
 				except IndexError:
 					pass
 
