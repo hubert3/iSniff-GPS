@@ -105,7 +105,7 @@ def process(p):
 			if p.haslayer(Dot11Elt) and p.info:
 				if p.info not in client[mac]:
 					client[mac].append(p.info)
-					UpdateDB(clientmac=mac, time=p.time, SSID=p.info)
+					UpdateDB(clientmac=mac, time=p.time, SSID=unicode(p.info))
 					return "%s [%s] probe for %s" % (get_manuf(mac),mac,p.info)
 
 	elif p.haslayer(Dot11AssoReq) or p.haslayer(Dot11AssoResp) or p.haslayer(Dot11ReassoReq) or p.haslayer(Dot11ReassoResp):
