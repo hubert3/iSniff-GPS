@@ -4,7 +4,13 @@
 {% block head %}
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
-<link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+<style>
+  html, body, #map-canvas {
+   height: 100%;
+   margin: 0px;
+   padding: 0px
+  }
+</style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization,drawing"></script>
 <script src="/static/jquery-2.0.0.min.js"></script>
 <script>
@@ -45,7 +51,7 @@ function initialize() {
       center: new google.maps.LatLng{{center}},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+    map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 
     
   var drawingManager = new google.maps.drawing.DrawingManager({
@@ -157,5 +163,5 @@ function showAll() {
       <button onclick="changeRadius()">Change radius</button>
       <button onclick="changeOpacity()">Change opacity</button>
     </div>
-<div id="map_canvas"></div>
+<div id="map-canvas"></div>
 {% endblock %}

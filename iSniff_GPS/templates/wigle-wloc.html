@@ -4,7 +4,13 @@
 {% block head %}
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
-<link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+<style>
+  html, body, #map-canvas {
+   height: 100%;
+   margin: 0px;
+   padding: 0px
+  }
+</style>
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="/static/jquery-latest.js"></script>
 <script>
@@ -14,7 +20,7 @@ function initialize() {
       center: new google.maps.LatLng{{center}},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+    var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
     var image = '/static/wifi.png'
     var flag = '/static/flag.png'
     
@@ -40,5 +46,5 @@ $.ajax({
 <input id="SSID" value="{{ ssid }}">
 <input type="submit" value="Go" onclick='window.location="{% url "locatessid-base" %}/"+document.getElementById("SSID").value'>
 {% if hits %}{{hits}} APs returned.{%endif%}
-<div id="map_canvas"></div>
+<div id="map-canvas"></div>
 {% endblock %}
