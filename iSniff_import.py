@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from color import *
-from netaddr import *
+from netaddr import EUI
 from scapy.all import *
 from dnslib import DNSRecord # for mdns/bonjour name parsing
 from django.utils import timezone
@@ -103,10 +103,11 @@ def process(p):
 		mac = p.getlayer(Dot11).addr2
 		for p in p:
 			if p.haslayer(Dot11Elt) and p.info:
-				if p.info not in client[mac]:
-					client[mac].append(p.info)
-					UpdateDB(clientmac=mac, time=p.time, SSID=unicode(p.info))
-					return "%s [%s] probe for %s" % (get_manuf(mac),mac,p.info)
+				probed_ssid = p.info.decode('utf8')
+				if probed_ssid not in client[mac]:
+					client[mac].append(probed_ssid)
+					UpdateDB(clientmac=mac, time=p.time, SSID=probed_ssid)
+					return "%s [%s] probe for %s" % (get_manuf(mac),mac,probed_ssid)
 
 	elif p.haslayer(Dot11AssoReq) or p.haslayer(Dot11AssoResp) or p.haslayer(Dot11ReassoReq) or p.haslayer(Dot11ReassoResp):
 		pass
@@ -145,6 +146,6 @@ print '-------'
 print
 
 for mac in client:
-	print '%s [%s] probed for %s' % (get_manuf(mac),mac,client[mac])
+	print '%s [%s] probed for %s' % (get_manuf(mac),mac,', '.join(client[mac]))
 
 #print json.dumps(client)
