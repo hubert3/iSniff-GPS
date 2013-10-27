@@ -3,14 +3,13 @@ from django.core.exceptions import *
 from django.shortcuts import render
 from django.views.generic import *
 from django.db.models import Count
+from datetime import datetime
 from models import *
 from string import lower
 import wigle
 import wloc
 import re
 from netaddr import EUI
-
-apset = set()
 
 def get_manuf(apdict):
 	manufdict = {}
@@ -110,19 +109,16 @@ def getCenter(apdict):
 		return((0,0))
 	
 def AppleWloc(request,bssid=None):	
-	print
-	print 'Got request for %s' % bssid
 	if not bssid:
-		bssid = '00:0f:61:8b:f6:21'
-	if 'apset' not in request.session:
-		request.session['apset'] = set()
+		bssid = '00:20:b0:12:3c:40'
+	print 'Got request for %s' % bssid
 	if request.GET.get('ajax'):
 		template='apple-wloc-ajax.js'		
 	else:
 		template='apple-wloc.html'
+		request.session['apdict'] = {}
 		request.session['apset'] = set() #reset server-side cache of unique bssids if we load page normally
 	print '%s in set at start' % len(request.session['apset'])
-	#print request.session['apset']
 	bssid=lower(bssid)
 	apdict = wloc.QueryBSSID(bssid)	
 	print '%s returned from Apple' % len(apdict)
@@ -146,7 +142,51 @@ def AppleWloc(request,bssid=None):
 			print 'Updated %s location to %s' % (a,(a.lat,a.lon))
 		except ObjectDoesNotExist:
 			pass
+	for key in apdict.keys():
+		request.session['apdict'][key] = apdict[key]
+	print 'Session apdict: %s' % len(request.session['apdict'])
 	return render(request,template,{'bssid':bssid,'hits':len(apdict),'center':getCenter(apdict),'bssids':apdict.keys(),'apdict':apdict,'manufdict':get_manuf(apdict)})
+
+def LoadDB(request,name=None):
+	c=PointDB.objects.get(name=name)
+	request.session['apdict']=c.pointdict
+	apdict = request.session['apdict']
+	request.session['apset']=set(apdict.keys())
+	print 'Loaded saved DB %s from %s' % (name,c.date_saved)
+	return render(request,'apple-wloc.html',{'bssid':apdict.keys()[0],'hits':len(apdict),'center':getCenter(apdict),'bssids':apdict.keys(),'apdict':apdict,'manufdict':get_manuf(apdict)})
+
+def SaveDB(request,name=None):
+	try:
+		c = PointDB.objects.get(name=name)
+	except ObjectDoesNotExist:
+		c = PointDB(name=name)
+	c.pointdict = request.session['apdict']
+	c.save()
+	return HttpResponse('Saved %s points as %s' % (len(request.session['apdict'].keys()),name)) #xss
+
+def AppleMobile(request,cellid=None,LTE=False):
+	if 'cellset' not in request.session:
+		request.session['cellset'] = set()
+	if request.GET.get('ajax'):
+		template='apple-mobile-ajax.js'		
+	else:
+		template='apple-mobile.html'
+		request.session['cellset'] = set()
+	if cellid:
+		(celldict,celldesc) = wloc.QueryMobile(cellid,LTE)
+		numresults = len(celldict)
+		if numresults == 0:
+			return HttpResponse('0 results.')
+		dupes = 0
+		for cell in celldict.keys():
+			if cell in request.session['cellset']:
+				dupes += 1
+				del celldict[cell]
+			request.session['cellset'].add(cell)
+		return render(request,template,{'bssid':cellid,'hits':len(celldict),'center':getCenter(celldict),\
+			'bssids':celldict.keys(),'apdict':celldict,'manufdict':celldesc,'LTE':LTE})
+	else:
+		return render(request,'wigle-wloc.html',{'ssid':'','center':(56.97518158, 24.17274475)})
 
 def locateSSID(request,ssid=None):
 	if ssid:

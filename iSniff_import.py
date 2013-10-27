@@ -11,6 +11,7 @@ from iSniff_GPS.models import Client, AP, Location
 from collections import defaultdict
 
 import code
+import binascii
 import argparse
 import json
 import sys
@@ -25,6 +26,9 @@ count = 0 #count of scapy packets processed
 client = defaultdict(list)
 interface = "mon0"
 
+def ascii_printable(s):
+	return ''.join(i for i in s if ord(i)>31 and ord(i)<128)
+
 def get_manuf(m):
 	try:
 		mac = EUI(m)
@@ -32,7 +36,7 @@ def get_manuf(m):
 		#.replace(', Inc','').replace(' Inc.','')
 	except:
 		manuf='unknown'
-	return manuf
+	return ascii_printable(manuf)
 
 def CreateOrUpdateClient(mac,utc,name=None):
 	try:
@@ -103,11 +107,15 @@ def process(p):
 		mac = p.getlayer(Dot11).addr2
 		for p in p:
 			if p.haslayer(Dot11Elt) and p.info:
-				probed_ssid = p.info.decode('utf8')
-				if probed_ssid not in client[mac]:
+				try:
+					probed_ssid = p.info.decode('utf8')
+				except UnicodeDecodeError:
+					probed_ssid = 'HEX:%s' % binascii.hexlify(p.info)
+					print '%s [%s] probed for non-UTF8 SSID (%s bytes, converted to "%s")' % (get_manuf(mac),mac,len(p.info),probed_ssid)
+				if len(probed_ssid) > 0 and probed_ssid not in client[mac]:
 					client[mac].append(probed_ssid)
-					UpdateDB(clientmac=mac, time=p.time, SSID=probed_ssid)
-					return "%s [%s] probe for %s" % (get_manuf(mac),mac,probed_ssid)
+					UpdateDB(clientmac=mac, time=p.time, SSID=probed_ssid) #unicode goes in DB for browser display
+					return "%s [%s] probe for %s" % (get_manuf(mac),mac,ascii_printable(probed_ssid)) #ascii only for console print
 
 	elif p.haslayer(Dot11AssoReq) or p.haslayer(Dot11AssoResp) or p.haslayer(Dot11ReassoReq) or p.haslayer(Dot11ReassoResp):
 		pass
@@ -146,6 +154,6 @@ print '-------'
 print
 
 for mac in client:
-	print '%s [%s] probed for %s' % (get_manuf(mac),mac,', '.join(client[mac]))
+	print '%s [%s] probed for %s' % (get_manuf(mac),mac,', '.join(map(ascii_printable,client[mac])))
 
 #print json.dumps(client)

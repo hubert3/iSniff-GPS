@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load dict_lookup %}
+{% load dot_colour %}
+{% load cellid_print %}
 
 {% block head %}
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -21,33 +23,81 @@ var flag = '/static/flag.png';
 var image = '/static/wifi.png';
 var blank = '/static/blank.png';
 
-var redDot = {path: google.maps.SymbolPath.CIRCLE,
-    fillOpacity: 0.5,
+var bigRedDot = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 1.0,
     fillColor: 'ff0000',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
-    scale: 5};
+    scale: 7};
 
-var blueDot = {path: google.maps.SymbolPath.CIRCLE,
-    fillOpacity: 0.5,
-    fillColor: '00ff00',
+var redCell = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 1.0,
+    fillColor: 'ff0000',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
-    scale: 3};
+    scale: 4};
+
+var redLAC = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 0.1,
+    fillColor: 'ff0000',
+    strokeOpacity: 1.0,
+    strokeColor: '000000',
+    strokeWeight: 1.0, 
+    scale: 20};
+
+var blueCell = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 1.0,
+    fillColor: '0000ff',
+    strokeOpacity: 1.0,
+    strokeColor: '000000',
+    strokeWeight: 1.0, 
+    scale: 4};
+
+var blueLAC = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 0.1,
+    fillColor: '0000ff',
+    strokeOpacity: 1.0,
+    strokeColor: '000000',
+    strokeWeight: 1.0, 
+    scale: 20};
+
+var yellowCell = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 1.0,
+    fillColor: 'ffff00',
+    strokeOpacity: 1.0,
+    strokeColor: '000000',
+    strokeWeight: 1.0, 
+    scale: 4};
+
+var yellowLAC = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 0.1,
+    fillColor: 'ffff00',
+    strokeOpacity: 1.0,
+    strokeColor: '000000',
+    strokeWeight: 1.0, 
+    scale: 20};
+
+var blackDot = {path: google.maps.SymbolPath.CIRCLE,
+    fillOpacity: 1.0,
+    fillColor: '000000',
+    strokeOpacity: 1.0,
+    strokeColor: '000000',
+    strokeWeight: 1.0, 
+    scale: 4};
 
 function loadAjax(bssid) {
     document.getElementById('results').innerHTML = '<img src="/static/ajax-loader.gif">'
     $.ajax({
     type: "GET",
-    url: "{% url "applewloc-base" %}/"+bssid+"?ajax=1",
+    url: "{% if LTE %}{% url "apple-mobile-lte" cellid="" %}{%else%}{% url "apple-mobile" cellid="" %}{%endif%}"+bssid+"?ajax=1",
     success: function (js) {eval(js);}}); // insecure, vulnerable to json hijacking etc.
 }
 
 function initialize() {
     var mapOptions = {
-      zoom: 18,
+      zoom: 13,
       center: new google.maps.LatLng{{center}},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
@@ -73,7 +123,7 @@ function initialize() {
 {% for b in bssids %}
    var myLatLng = new google.maps.LatLng{{ apdict|key:b }};
    apData.push(myLatLng);
-   var marker = new google.maps.Marker({position: myLatLng, map: map, title: '{{b}} - {{manufdict|key:b}}', icon: {% if b == bssid %}redDot{%else%}blueDot{%endif%}});
+   var marker = new google.maps.Marker({position: myLatLng, map: map, title: '{{manufdict|key:b}}', icon: {% if b == bssid %}bigRedDot{%else%}{{manufdict|key:b|dot_colour}}{%endif%}});
    google.maps.event.addListener(marker, "click", function() {loadAjax("{{b}}")});
    markersArray.push(marker);
    
@@ -126,13 +176,13 @@ function toggleMarkers() {
 
 function applyFilter() {
   var count = 0;
-  var filter = prompt('Enter BSSID / Manufacturer to show:')
+  var filter = prompt('Enter operator to show:')
 
   for (var i = 0; i < markersArray.length; i++ ) {
     marker = markersArray[i];
-    if (marker.title.toUpperCase().indexOf(filter.toUpperCase()) == -1) {marker.setVisible(false);} else {marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png'); count += 1;}
+    if (marker.title.toUpperCase().indexOf(filter.toUpperCase()) == -1) {marker.setVisible(false);} else {count += 1;}
   }
-  document.getElementById('results').innerHTML=count+' APs matching '+filter; // domxss
+  document.getElementById('results').innerHTML=count+' cells matching '+filter; // domxss
 }
 
 function showAll() {
@@ -140,31 +190,17 @@ function showAll() {
     marker = markersArray[i];
     marker.setVisible(true);
   }
-  document.getElementById('results').innerHTML=markersArray.length+' APs shown.';
-}
-
-function load() {
-  var loadName = prompt('Load saved view:')
-  window.location = "{% url "loaddb" ""%}"+loadName;
-}
-
-function save() {
-  var saveName = prompt('Save current view as:')
-
-    $.ajax({
-    type: "GET",
-    url: "{% url "savedb" ""%}"+saveName,
-    success: function (js) {alert(js);}});
+  document.getElementById('results').innerHTML=markersArray.length+' cells shown.';
 }
 
 </script>
 {% endblock %}
 
 {% block content %}
-<h2><div id='bssid'>BSSID {{bssid}}</div></h2>
+<h2><div id='bssid'>Cell {{bssid}}</div></h2>
 <!--<input id="BSSID" value="{{ bssid }}">
 <input type="submit" value="Go" onclick='window.location="{% url "applewloc-base" %}/"+document.getElementById("BSSID").value'>
---><h3><div id='results'>{% if hits %}{{hits}} APs shown.{%endif%}</div></h3>
+--><h3><div id='results'>{% if hits %}{{hits}} cells shown.{%endif%}</div></h3>
    <div id="panel">
       <button onclick="toggleMarkers()">Toggle markers</button>
       <button onclick="applyFilter()">Filter</button>
@@ -173,8 +209,6 @@ function save() {
       <button onclick="changeGradient()">Change gradient</button>
       <button onclick="changeRadius()">Change radius</button>
       <button onclick="changeOpacity()">Change opacity</button>
-      <button onclick="load()">Load</button>
-      <button onclick="save()">Save</button>
     </div>
 <div id="map-canvas"></div>
 {% endblock %}

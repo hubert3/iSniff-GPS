@@ -1,4 +1,6 @@
 from django.db import models
+from picklefield.fields import PickledObjectField
+from datetime import datetime
 
 class Client(models.Model):
 	mac = models.CharField(max_length=len('ff:ff:ff:ff:ff:ff'), unique=True) 
@@ -27,6 +29,11 @@ class AP(models.Model):
 			return u'%s' % self.SSID
                 if self.BSSID:
                         return u'<font color="red">ARP:%s</font>' % self.BSSID
+
+class PointDB(models.Model):
+     name = models.CharField(max_length=200, unique=True)
+     date_saved = models.DateTimeField('date saved', default=datetime.now)
+     pointdict = PickledObjectField()
 
 class Location(models.Model):
 	ap = models.ForeignKey(AP)

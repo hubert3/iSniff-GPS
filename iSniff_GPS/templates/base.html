@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>{% block title %}iSniff GPS v0.2 SyScan Edition{% endblock %}</title>
+<title>{% block title %}iSniff GPS v1.0 Ruxcon Edition{% endblock %}</title>
 <style>
 
 body {
@@ -171,7 +171,7 @@ table {
 
 <body onload="initialize()">
     <div id="sidebar">
-        <a href="{%url "clientlist" %}">Clients</a> | <a href="{%url "networks"%}">Networks</a> | <a href="{%url "applewloc" 'a4:b1:e9:85:76:67'%}">Apple WiFi Geolocation</a> | <a href="{%url "locatessid" 'blackhat'%}">SSID Search</a> | <a href="{%url "stats"%}">Stats</a>
+        <a href="{%url "clientlist" %}">Clients</a> | <a href="{%url "networks"%}">Networks</a> | <a href="{%url "applewloc" '00:20:b0:12:3c:40'%}">Apple WiFi Geolocation</a> | <a href="{%url "apple-mobile-lte" cellid='505:1:12288:135943937' %}">Apple LTE Geolocation</a> | <a href="{%url "apple-mobile" cellid='505:3:338:87276701' %}">Apple GSM/3G Geolocation</a> | <a href="{%url "locatessid" 'blackhat'%}">Wigle SSID Search</a> | <a href="{%url "stats"%}">Stats</a>
     </div>
     {% block content %}{% endblock %}
 </body>
