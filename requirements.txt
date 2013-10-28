@@ -1,0 +1,8 @@
+django
+django-picklefield
+dnslib
+netaddr
+requests
+BeautifulSoup4
+protobuf
+#above requirements are for web interface only - also need scapy for sniffing
