@@ -27,10 +27,10 @@ iSniff GPS contains 2 major components and further python modules:
 Instructions
 ------------
 
-1. Install Django 1.5+, Scapy and all required Python modules.
+1. Install all required Python modules by doing `pip install -r requirements.txt`. You also need Scapy for sniffing.
 2. Initialise an empty database by running `./manage.py syncdb`.
 3. Import data from a pcap by running `./run.sh -r <chan11.pcap>` or start live sniffing with `./run.sh -i mon0`. 
-4. Start the web interface by running `./manage.py runserver ip:port`.
+4. Start the web interface by running `./manage.py runserver 127.0.0.1:8000`.
 
 To solicit ARPs from iOS devices, set up an access point with DHCP disabled (e.g. using airbase-ng) and configure your sniffing interface to the same channel. 
 
@@ -39,13 +39,14 @@ Once associated, iOS devices will send up to three ARPs destined for the MAC add
 Dependencies
 ------------
 
-iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.5.1 and Scapy 2.2.0-dev.
+iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.5.4 and Scapy 2.2.0-dev.
 Additional Python modules are required which can generally be installed by running `pip install <module>`:
 
 * dnslib
 * netaddr
 * requests
 * BeautifulSoup4
+* django-picklefield
 * protobuf (Google Protocol Buffers)
 
 Credits
