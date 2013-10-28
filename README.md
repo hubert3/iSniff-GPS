@@ -33,22 +33,24 @@ To use the web interface:
 2. Initialise an empty database by running `./manage.py syncdb`.
 3. Start the web interface by running `./manage.py runserver 127.0.0.1:8000`.
 
-If you want to sniff wifi traffic:
+To sniff wifi traffic:
 
 1. Install Scapy
 2. Import data from a wifi pcap capture by running `./run.sh -r <chan11.pcap>`
 3. For live capture, bring up a wifi interface in monitor mode (usually mon0) so that airodump-ng shows traffic.
 4. Start live sniffing with `./run.sh -i mon0`. 
 
-To solicit ARPs from iOS devices, set up an access point with DHCP disabled (e.g. using airbase-ng) and configure your sniffing interface to the same channel. 
+To solicit ARPs from iOS devices, set up an access point with DHCP disabled (e.g. using airbase-ng) and configure your sniffing interface to the same channel.
 
 Once associated, iOS devices will send up to three ARPs destined for the MAC address of the DHCP server on previously joined networks. On typical home WiFi routers, the DHCP server MAC address is the same as the WiFi interface MAC address, which can be used for accurate geolocation. On larger corporate WiFi networks, the MAC of the DHCP server may be different and thus cannot be used for geolocation.
+
+Note that as of iOS 6, DNAv4 ARPs containing the information disclosure should only be sent on encrypted networks (to be verified). See http://lists.apple.com/archives/security-announce/2012/Sep/msg00003.html (CVE-2012-3725)
 
 Dependencies
 ------------
 
 iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.5.4 and Scapy 2.2.0-dev.
-See requirements.txt for additional Python modules required (install with `pip install -r requirements.txt`)
+See requirements.txt for additional python modules required.
 
 Credits
 -------
