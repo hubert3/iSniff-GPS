@@ -27,10 +27,18 @@ iSniff GPS contains 2 major components and further python modules:
 Instructions
 ------------
 
-1. Install all required Python modules by doing `pip install -r requirements.txt`. You also need Scapy for sniffing.
+To use the web interface:
+
+1. Install required Python modules by running `pip install -r requirements.txt`.
 2. Initialise an empty database by running `./manage.py syncdb`.
-3. Import data from a pcap by running `./run.sh -r <chan11.pcap>` or start live sniffing with `./run.sh -i mon0`. 
-4. Start the web interface by running `./manage.py runserver 127.0.0.1:8000`.
+3. Start the web interface by running `./manage.py runserver 127.0.0.1:8000`.
+
+If you want to sniff wifi traffic:
+
+1. Install Scapy
+2. Import data from a wifi pcap capture by running `./run.sh -r <chan11.pcap>`
+3. For live sniffing, bring up a wifi interface in monitor mode (usually mon0) so that airodump-ng from (part of aircrack-ng) shows traffic.
+4. Start live sniffing with `./run.sh -i mon0`. 
 
 To solicit ARPs from iOS devices, set up an access point with DHCP disabled (e.g. using airbase-ng) and configure your sniffing interface to the same channel. 
 
