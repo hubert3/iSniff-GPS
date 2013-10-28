@@ -37,7 +37,7 @@ If you want to sniff wifi traffic:
 
 1. Install Scapy
 2. Import data from a wifi pcap capture by running `./run.sh -r <chan11.pcap>`
-3. For live sniffing, bring up a wifi interface in monitor mode (usually mon0) so that airodump-ng from (part of aircrack-ng) shows traffic.
+3. For live capture, bring up a wifi interface in monitor mode (usually mon0) so that airodump-ng shows traffic.
 4. Start live sniffing with `./run.sh -i mon0`. 
 
 To solicit ARPs from iOS devices, set up an access point with DHCP disabled (e.g. using airbase-ng) and configure your sniffing interface to the same channel. 
@@ -48,14 +48,7 @@ Dependencies
 ------------
 
 iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.5.4 and Scapy 2.2.0-dev.
-Additional Python modules are required which can generally be installed by running `pip install <module>`:
-
-* dnslib
-* netaddr
-* requests
-* BeautifulSoup4
-* django-picklefield
-* protobuf (Google Protocol Buffers)
+See requirements.txt for additional Python modules required (install with `pip install -r requirements.txt`)
 
 Credits
 -------
