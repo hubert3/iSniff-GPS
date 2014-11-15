@@ -110,7 +110,7 @@ def getCenter(apdict):
 	
 def AppleWloc(request,bssid=None):	
 	if not bssid:
-		bssid = '00:20:b0:12:3c:40'
+		bssid = '00:1e:52:7a:ae:ad'
 	print 'Got request for %s' % bssid
 	if request.GET.get('ajax'):
 		template='apple-wloc-ajax.js'		
