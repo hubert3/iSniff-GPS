@@ -105,13 +105,6 @@ ROOT_URLCONF = 'iSniff_GPS.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'iSniff_GPS.wsgi.application'
 
-TEMPLATE_DIRS = (
-	"/home/isniff/iSniff_GPS/iSniff_GPS/templates"
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
