@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 def getLocation(BSSID='',SSID=''):
 	payload = {'netid':BSSID, 'ssid':SSID}
-	cookie = dict(auth='isniff:828743010:1376760763:hcPtNcrXETNsQIMIan/1sA')
+	cookie = dict(auth='isniff:841981133:1416119202:eiewXk78tQeXklwin17pYw')
 	r = requests.post('https://wigle.net/gps/gps/main/confirmquery/',cookies=cookie,data=payload)
 	soup = BeautifulSoup(r.text)
 	apdict={}
