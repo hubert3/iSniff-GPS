@@ -131,10 +131,10 @@ def QueryMobile(cellid,LTE=False):
 			"Accept-Language":"en-us",'Accept-Encoding:':' gzip, deflate'}
 	data = "\x00\x01\x00\x05"+"en_US"+"\x00\x13"+"com.apple.locationd"+"\x00\x0c"+"7.0.3.11B511"+"\x00\x00\x00\x01\x00\x00\x00"+chr(len(req_string)) + req_string;
 	#data = "\x00\x01\x00\x05"+"en_US"+"\x00\x13"+"com.apple.locationd"+"\x00\x0c"+"6.1.1.10B145"+"\x00\x00\x00\x01\x00\x00\x00"+chr(len(req_string)) + req_string;
-	f=file('request.bin','wb')
-	f.write(req_string)
-	print('Wrote request.bin')
-	f.close()
+	#f=file('request.bin','wb')
+	#f.write(req_string)
+	#print('Wrote request.bin')
+	#f.close()
 	cellid = '%s:%s:%s:%s' % (MCC,MNC,LAC,CID)
 	print 'Querying %s' % cellid
 	r = requests.post('https://gs-loc.apple.com/clls/wloc',headers=headers,data=data,verify=False) #the remote SSL cert CN on this server doesn't match hostname anymore
