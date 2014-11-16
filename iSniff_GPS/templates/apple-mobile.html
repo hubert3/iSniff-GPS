@@ -13,7 +13,7 @@
   }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization,drawing"></script>
-<script src="/static/jquery-2.0.0.min.js"></script>
+<script src="/static/jquery-2.1.1.min.js"></script>
 <script>
 var map, heatmap, pointArray, clickedMarker;
 var markersArray = [];
@@ -24,7 +24,7 @@ var blank = '/static/blank.png';
 
 var bigRedDot = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 1.0,
-    fillColor: 'ff0000',
+    fillColor: '#ff0000',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -32,7 +32,7 @@ var bigRedDot = {path: google.maps.SymbolPath.CIRCLE,
 
 var redCell = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 1.0,
-    fillColor: 'ff0000',
+    fillColor: '#ff0000',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -40,7 +40,7 @@ var redCell = {path: google.maps.SymbolPath.CIRCLE,
 
 var redLAC = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 0.1,
-    fillColor: 'ff0000',
+    fillColor: '#ff0000',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -48,7 +48,7 @@ var redLAC = {path: google.maps.SymbolPath.CIRCLE,
 
 var blueCell = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 1.0,
-    fillColor: '0000ff',
+    fillColor: '#0000ff',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -56,7 +56,7 @@ var blueCell = {path: google.maps.SymbolPath.CIRCLE,
 
 var blueLAC = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 0.1,
-    fillColor: '0000ff',
+    fillColor: '#0000ff',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -64,7 +64,7 @@ var blueLAC = {path: google.maps.SymbolPath.CIRCLE,
 
 var yellowCell = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 1.0,
-    fillColor: 'ffff00',
+    fillColor: '#ffff00',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -72,7 +72,7 @@ var yellowCell = {path: google.maps.SymbolPath.CIRCLE,
 
 var yellowLAC = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 0.1,
-    fillColor: 'ffff00',
+    fillColor: '#ffff00',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -80,7 +80,7 @@ var yellowLAC = {path: google.maps.SymbolPath.CIRCLE,
 
 var blackDot = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 1.0,
-    fillColor: '000000',
+    fillColor: '#000000',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 

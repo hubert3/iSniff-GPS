@@ -12,7 +12,7 @@
   }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization,drawing"></script>
-<script src="/static/jquery-2.0.0.min.js"></script>
+<script src="/static/jquery-2.1.1.min.js"></script>
 <script>
 var map, heatmap, pointArray, clickedMarker;
 var markersArray = [];
@@ -23,7 +23,7 @@ var blank = '/static/blank.png';
 
 var redDot = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 0.5,
-    fillColor: 'ff0000',
+    fillColor: '#ff0000',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
@@ -31,7 +31,7 @@ var redDot = {path: google.maps.SymbolPath.CIRCLE,
 
 var blueDot = {path: google.maps.SymbolPath.CIRCLE,
     fillOpacity: 0.5,
-    fillColor: '00ff00',
+    fillColor: '#00ff00',
     strokeOpacity: 1.0,
     strokeColor: '000000',
     strokeWeight: 1.0, 
