@@ -68,27 +68,36 @@ def ProcessMobileResponse(cell_list):
 			pass
 			#print 'Weird cell: %s' % cell
 	#kml.save("test.kml")
-	f=file('result.txt','w')
-	for (cid,desc) in celldesc.items():
+	#f=file('result.txt','w')
+	#for (cid,desc) in celldesc.items():
 		#print cid, desc
-		f.write('%s %s\n'%(cid,desc))
-	f.close()
-	print 'Wrote result.txt'
+		#f.write('%s %s\n'%(cid,desc))
+	#f.close()
+	#print 'Wrote result.txt'
 	return (celldict,celldesc)
 
-def QueryBSSID(bssid):
+def QueryBSSID(query, more_results=True):
 	liste_wifi = BSSIDApple_pb2.BlockBSSIDApple()
-	wifi = liste_wifi.wifi.add()
-	wifi.bssid = bssid
+	if type(query) in (str,unicode):
+		bssid_list = [query]
+	elif type(query) == list:
+		bssid_list = query
+	else:
+		raise TypeError('Provide 1 BSSID as string or multiple BSSIDs as list of strings')
+	for bssid in bssid_list:
+		wifi = liste_wifi.wifi.add()
+		wifi.bssid = bssid
 	liste_wifi.valeur_inconnue1 = 0
-	liste_wifi.valeur_inconnue2 = 0
-	liste_wifi.APIName= "com.apple.Maps"
+	if more_results:
+		liste_wifi.valeur_inconnue2 = 0 # last byte in request == 0 means return ~400 results, 1 means only return results for BSSIDs queried
+	else:
+		liste_wifi.valeur_inconnue2 = 1
 	chaine_liste_wifi = liste_wifi.SerializeToString()
 	longueur_chaine_liste_wifi = len(chaine_liste_wifi)
-	headers = { 	'Content-Type':'application/x-www-form-urlencoded', 'Accept':'*/*', "Accept-Charset": "utf-8","Accept-Encoding": "gzip, deflate",\
-			"Accept-Language":"en-us", 'User-Agent':'locationd (unknown version) CFNetwork/548.1.4 Darwin/11.0.0'}
-	data = "\x00\x01\x00\x05"+"en_US"+"\x00\x00\x00\x09"+"5.1.9B176"+"\x00\x00\x00\x01\x00\x00\x00" + chr(longueur_chaine_liste_wifi) + chaine_liste_wifi;
-	r = requests.post('https://gs-loc.apple.com/clls/wloc',headers=headers,data=data,verify=False) #the remote SSL cert CN on this server doesn't match hostname anymore
+	headers = {'Content-Type':'application/x-www-form-urlencoded', 'Accept':'*/*', "Accept-Charset": "utf-8","Accept-Encoding": "gzip, deflate",\
+			"Accept-Language":"en-us", 'User-Agent':'locationd/1753.17 CFNetwork/711.1.12 Darwin/14.0.0'}
+	data = "\x00\x01\x00\x05"+"en_US"+"\x00\x13"+"com.apple.locationd"+"\x00\x0a"+"8.1.12B411"+"\x00\x00\x00\x01\x00\x00\x00" + chr(longueur_chaine_liste_wifi) + chaine_liste_wifi;
+	r = requests.post('https://gs-loc.apple.com/clls/wloc',headers=headers,data=data,verify=False) # CN of cert on this hostname is sometimes *.ls.apple.com / ls.apple.com, so have to disable SSL verify
 	liste_wifi = BSSIDApple_pb2.BlockBSSIDApple() 
 	liste_wifi.ParseFromString(r.content[10:])
 	return ListWifiDepuisApple(liste_wifi)
