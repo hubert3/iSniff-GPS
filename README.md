@@ -29,7 +29,7 @@ Instructions
 
 To use the web interface:
 
-1. Install required Python modules by running `pip install -r requirements.txt`.
+1. Install or update required Python modules by running `pip install -U -r requirements.txt`.
 2. Initialise an empty database by running `./manage.py syncdb`.
 3. Start the web interface by running `./manage.py runserver 127.0.0.1:8000`.
 
@@ -49,8 +49,11 @@ Note that as of iOS 6, DNAv4 ARPs containing the information disclosure should o
 Dependencies
 ------------
 
-iSniff GPS was developed and tested on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.5.4 and Scapy 2.2.0-dev.
-See requirements.txt for additional python modules required.
+See requirements.txt for python modules and versions required.
+
+iSniff GPS was developed on a Ubuntu 12.04 (32-bit) VM with Python 2.7.3, Django 1.5.4 and Scapy 2.2.0-dev.
+The web interface code has been updated and tested with Django 1.7.1 running on Mac OS X Yosemite with Python 2.7.8.
+Network sniffing has not been tested on Mac OS X.
 
 Credits
 -------
