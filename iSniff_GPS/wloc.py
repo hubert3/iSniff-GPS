@@ -143,10 +143,10 @@ def QueryMobile(cellid,LTE=False):
 	else:
 		response = GSM_pb2.CellInfoFromApple1()
 	response.ParseFromString(r.content[1:])
-	f=file(cellid+'.bin','wb')
-	f.write(r.content[1:])
-	f.close()
-	print 'Wrote %s' % (cellid+'.bin')
+	#f=file(cellid+'.bin','wb')
+	#f.write(r.content[1:])
+	#f.close()
+	#print 'Wrote %s' % (cellid+'.bin')
 
 	return ProcessMobileResponse(response)
 
