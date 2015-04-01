@@ -10,6 +10,7 @@ from datetime import datetime #for utcfromtimestamp
 from iSniff_GPS.models import Client, AP, Location
 from collections import defaultdict
 
+import django
 import code
 import binascii
 import argparse
@@ -17,6 +18,7 @@ import json
 import sys
 import re
 
+django.setup()
 parser = argparse.ArgumentParser(description='iSniff GPS Server')
 parser.add_argument('-r', dest='pcap', action='store', help='pcap file to read')
 parser.add_argument('-i', dest='interface', action='store', default='mon0', help='interface to sniff (default mon0)')
