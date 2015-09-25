@@ -3,7 +3,6 @@ import settings
 from wigle import Wigle
 # parse lat/lon from hrefs in results page like
 # <a href="/gps/gps/Map/onlinemap2/?maplat=39.89233017&maplon=-86.15497589&mapzoom=17&ssid=NETGEAR&netid=00:00:85:E7:0C:01">Get Map</a>
-print settings.ROOT_URLCONF
 def getLocation(BSSID='',SSID=''):
 	wigle = Wigle(settings.wigle_username, settings.wigle_password)
 	results = wigle.search(ssid=SSID) 
