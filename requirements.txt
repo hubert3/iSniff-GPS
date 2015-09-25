@@ -3,6 +3,5 @@ django-picklefield
 dnslib
 netaddr
 requests
-BeautifulSoup4
 protobuf==2.6.1
 #above requirements are for web interface only - also need scapy for sniffing
