@@ -1,6 +1,7 @@
 django==1.7.1
 django-picklefield
 dnslib
+wigle
 netaddr
 requests
 protobuf==2.6.1
