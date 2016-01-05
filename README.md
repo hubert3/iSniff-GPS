@@ -22,7 +22,7 @@ iSniff GPS contains 2 major components and further python modules:
 
 * __wloc.py__ provides a _QueryBSSID()_ function which looks up a given BSSID (AP MAC address) on Apple's WiFi location service. It will return the coordinates of the MAC queried for and usually an additional 400 nearby BSSIDs and their coordinates.
 
-* __wigle.py__ provides a _getLocation()_ function for querying a given SSID on the wigle.net database and returns GPS coordinates. It must be configured with a valid username and password set in the settings.py file. Please respect the wigle.net ToS in using this module.
+* __wigle_api.py__ provides a _getLocation()_ function for querying a given SSID on the wigle.net database and returns GPS coordinates. It must be configured with a valid username and password set in the settings.py file. Please respect the wigle.net ToS in using this module.
 
 Instructions
 ------------
