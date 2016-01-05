@@ -6,7 +6,7 @@ from django.db.models import Count
 from datetime import datetime
 from models import *
 from string import lower
-import wigle
+import wigle_api
 import wloc
 import re
 from netaddr import EUI
@@ -190,7 +190,7 @@ def AppleMobile(request,cellid=None,LTE=False):
 
 def locateSSID(request,ssid=None):
 	if ssid:
-		apdict = wigle.getLocation(SSID=ssid)
+		apdict = wigle_api.getLocation(SSID=ssid)
 		numresults = len(apdict)
 		if numresults == 0:
 			return HttpResponse('0 results.')
