@@ -127,8 +127,8 @@ def QueryMobile(cellid,LTE=False):
 		req.ua = 'com.apple.Maps'
 
 	req_string = req.SerializeToString()
-	headers = { 	'Content-Type':'application/x-www-form-urlencoded', 'Accept':'*/*', 'User-Agent':'locationd/1613.5.1 CFNetwork/672.0.8 Darwin/14.0.0',\
-			"Accept-Language":"en-us",'Accept-Encoding:':' gzip, deflate'}
+	headers = {'Content-Type':'application/x-www-form-urlencoded', 'Accept':'*/*', "Accept-Charset": "utf-8","Accept-Encoding": "gzip, deflate",\
+			"Accept-Language":"en-us", 'User-Agent':'locationd/1753.17 CFNetwork/711.1.12 Darwin/14.0.0'}	
 	data = "\x00\x01\x00\x05"+"en_US"+"\x00\x13"+"com.apple.locationd"+"\x00\x0c"+"7.0.3.11B511"+"\x00\x00\x00\x01\x00\x00\x00"+chr(len(req_string)) + req_string;
 	#data = "\x00\x01\x00\x05"+"en_US"+"\x00\x13"+"com.apple.locationd"+"\x00\x0c"+"6.1.1.10B145"+"\x00\x00\x00\x01\x00\x00\x00"+chr(len(req_string)) + req_string;
 	#f=file('request.bin','wb')
