@@ -1,7 +1,7 @@
-#Wigle settings
+#Wigle settings / https://wigle.net/account
 
-wigle_username = 'Bugmenot'
-wigle_password = 'hello'
+wigle_username = 'Bugmenot' # API Name
+wigle_password = 'hello' # API Token
 
 
 # Django settings for iSniff_GPS project.
