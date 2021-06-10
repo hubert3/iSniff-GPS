@@ -1,4 +1,4 @@
-django==1.7.1
+django==2.2.24
 django-picklefield
 dnslib
 wigle
