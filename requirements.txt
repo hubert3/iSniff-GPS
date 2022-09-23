@@ -4,5 +4,5 @@ dnslib
 wigle
 netaddr
 requests
-protobuf==2.6.1
+protobuf==3.18.3
 #above requirements are for web interface only - also need scapy for sniffing
