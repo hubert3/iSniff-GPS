@@ -4,11 +4,13 @@
 # Mostly taken from paper by François-Xavier Aguessy and Côme Demoustier
 # http://fxaguessy.fr/rapport-pfe-interception-ssl-analyse-donnees-localisation-smartphones/
 
-import sys
 import code
-import requests
+import sys
+
 import BSSIDApple_pb2
 import GSM_pb2
+import requests
+
 #import simplekml
 
 def padBSSID(bssid):
@@ -89,9 +91,9 @@ def QueryBSSID(query, more_results=True):
 		wifi.bssid = bssid
 	liste_wifi.valeur_inconnue1 = 0
 	if more_results:
-		liste_wifi.valeur_inconnue2 = 0 # last byte in request == 0 means return ~400 results, 1 means only return results for BSSIDs queried
+		liste_wifi.return_single_result = 0 # last byte in request == 0 means return ~400 results, 1 means only return results for BSSIDs queried
 	else:
-		liste_wifi.valeur_inconnue2 = 1
+		liste_wifi.return_single_result = 1
 	chaine_liste_wifi = liste_wifi.SerializeToString()
 	longueur_chaine_liste_wifi = len(chaine_liste_wifi)
 	headers = {'Content-Type':'application/x-www-form-urlencoded', 'Accept':'*/*', "Accept-Charset": "utf-8","Accept-Encoding": "gzip, deflate",\

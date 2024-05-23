@@ -1,27 +1,33 @@
-message WifiDetected { 
-required string bssid = 1; 
-message Location {
-optional int64 latitude = 1;
-optional int64 longitude = 2;
-optional int64 valeur_inconnue3 = 3; 
-optional int64 valeur_inconnue4 = 4; 
-optional int64 valeur_inconnue5 = 5; 
-optional int64 valeur_inconnue6 = 6; 
-optional int64 valeur_inconnue7 = 7; 
-optional int64 valeur_inconnue8 = 8; 
-optional int64 valeur_inconnue9 = 9; 
-optional int64 valeur_inconnue10 = 10; 
-optional int64 valeur_inconnue11 = 11; 
-optional int64 valeur_inconnue12 = 12; 
-optional int64 valeur_inconnue21 = 21;
-}
-optional Location location= 2; 
+syntax  = "proto2";
+message WifiDetected {
+  required string bssid = 1;
+  message Location {
+    optional int64 latitude = 1;
+    optional int64 longitude = 2;
+    optional int64 horizontal_accuracy = 3;
+    optional int64 unknown_value4 = 4;
+    optional int64 altitude = 5;
+    optional int64 vertical_accuracy = 6;
+    optional int64 speed = 7;
+    optional int64 course = 8;
+    optional int64 timestamp = 9;
+    optional int64 unknown_context = 10;
+    optional int64 motion_activity_type = 11;
+    optional int64 motion_activity_confidence = 12;
+    optional int64 provider = 13;
+    optional int64 floor = 14;
+    optional int64 unknown15 = 15;
+    optional int64 motion_vehicle_connected_state_changed = 16;
+    optional int64 unknown_value21 = 21;
+    // Ignored 17-31 because they are mostly unused. Very much spyware-esq shit
+  }
+  optional Location location = 2;
 }
 
 message BlockBSSIDApple {
-optional int64 valeur_inconnue0 = 1; 
-repeated WifiDetected wifi = 2; 
-optional int32 valeur_inconnue1 = 3; 
-optional int32 valeur_inconnue2 = 4; 
-optional string APIName = 5;
+  optional int64 valeur_inconnue0 = 1;
+  repeated WifiDetected wifi = 2;
+  optional int32 valeur_inconnue1 = 3;
+  optional int32 return_single_result = 4;
+  optional string APIName = 5;
 }
